@@ -1,7 +1,9 @@
 package ilu2;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Welcome {
 	
@@ -12,14 +14,21 @@ public class Welcome {
 	        return "HELLO, " + name.toUpperCase() + " !";
 	    } else if (name.contains(",")) {
 	        String[] names = name.split(",");
-	        List<String> capitalizedNames = new ArrayList<>();
-	        List<String> uppercaseNames = new ArrayList<>();
+	        Map<String, Integer> counts = new LinkedHashMap<>();
 	        for (String n : names) {
 	            String trimmedName = n.trim();
-	            if (trimmedName.equals(trimmedName.toUpperCase())) {
-	                uppercaseNames.add(trimmedName);
+	            counts.put(trimmedName, counts.getOrDefault(trimmedName, 0) + 1);
+	        }
+
+	        List<String> capitalizedNames = new ArrayList<>();
+	        List<String> uppercaseNames = new ArrayList<>();
+	        for (Map.Entry<String, Integer> entry : counts.entrySet()) {
+	            String n = entry.getKey();
+	            Integer count = entry.getValue();
+	            if (n.equals(n.toUpperCase())) {
+	                uppercaseNames.add(n + (count > 1 ? " (x" + count + ")" : ""));
 	            } else {
-	                capitalizedNames.add(trimmedName.substring(0, 1).toUpperCase() + trimmedName.substring(1));
+	                capitalizedNames.add(n.substring(0, 1).toUpperCase() + n.substring(1) + (count > 1 ? " (x" + count + ")" : ""));
 	            }
 	        }
 
