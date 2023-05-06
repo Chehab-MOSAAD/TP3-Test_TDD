@@ -47,8 +47,13 @@ public class Welcome {
 	            capitalizedNames.add(n.substring(0, 1).toUpperCase() + n.substring(1) + (count > 1 ? " (x" + count + ")" : ""));
 	        }
 	    }
-
-	    return multiNameGreetingBuilder(capitalizedNames, uppercaseNames);
+	    if (name.contains("yoda")) {
+	    	return reverseIfYodaExists(capitalizedNames, uppercaseNames);
+	    } else if (name.contains("YODA")) {
+	    	return reverse2IfYodaExists(capitalizedNames, uppercaseNames);
+	    } else {
+	    	return multiNameGreetingBuilder(capitalizedNames, uppercaseNames);
+	    }
 	}
 
 	private static String multiNameGreetingBuilder(List<String> capitalizedNames, List<String> uppercaseNames) {
@@ -78,4 +83,60 @@ public class Welcome {
 
 	    return sb.toString();
 	}
+	
+	private static String reverseIfYodaExists(List<String> capitalizedNames, List<String> uppercaseNames) {
+	    StringBuilder sb = new StringBuilder();
+	    if (!capitalizedNames.isEmpty()) {
+	        sb.append(capitalizedNames.get(0));
+	        for (int i = 1; i < capitalizedNames.size() - 1; i++) {
+	            sb.append(", ").append(capitalizedNames.get(i));
+	        }
+	        if (capitalizedNames.size() > 1) {
+	            sb.append(", and ");
+	        }
+	        sb.append(capitalizedNames.get(capitalizedNames.size() - 1));
+	        sb.append(", Hello.");
+	    }
+
+	    if (!uppercaseNames.isEmpty()) {
+	        sb.append(" AND HELLO, ");
+	        if (uppercaseNames.size() > 1) {
+	            for (int i = 0; i < uppercaseNames.size() - 1; i++) {
+	                sb.append(uppercaseNames.get(i)).append(", ");
+	            }
+	            sb.append("AND ");
+	        }
+	        sb.append(uppercaseNames.get(uppercaseNames.size() - 1)).append("!");
+	    }
+	    return sb.toString();
+	}
+
+	private static String reverse2IfYodaExists(List<String> capitalizedNames, List<String> uppercaseNames) {
+	    StringBuilder sb = new StringBuilder("Hello");
+
+	    if (!capitalizedNames.isEmpty()) {
+	        for (int i = 0; i < capitalizedNames.size() - 1; i++) {
+	            sb.append(", ").append(capitalizedNames.get(i));
+	        }
+	        if (capitalizedNames.size() > 1) {
+	            sb.append(" and ");
+	        }
+	        sb.append(capitalizedNames.get(capitalizedNames.size() - 1));
+	    }
+
+	    if (!uppercaseNames.isEmpty()) {
+	        sb.append(". AND ");
+	        for (int i = 0; i < uppercaseNames.size() - 1; i++) {
+	            sb.append(uppercaseNames.get(i)).append(", ");
+	        }
+	        sb.append("AND ").append(uppercaseNames.get(uppercaseNames.size() - 1));
+	    }
+
+	    if (!capitalizedNames.isEmpty() || !uppercaseNames.isEmpty()) {
+	        sb.append(", HELLO!");
+	    }
+
+	    return sb.toString();
+	}
+
 }
